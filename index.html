@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Sarah 💖</title>
+<title>Happy Easter Sarah 💖</title>
 
 <style>
 body {
@@ -14,31 +14,27 @@ body {
     text-align: center;
 }
 
-/* Container */
 .container {
     position: relative;
     z-index: 2;
-    padding: 30px;
+    padding: 25px;
 }
 
-/* Letter */
 .letter {
     max-width: 800px;
     margin: auto;
-    padding: 25px;
+    padding: 20px;
     background: rgba(255,255,255,0.15);
     border-radius: 20px;
     backdrop-filter: blur(10px);
 }
 
-/* Typing */
 .typing {
     white-space: pre-wrap;
     font-size: 18px;
     line-height: 1.7;
 }
 
-/* Buttons */
 button {
     padding: 12px 20px;
     border: none;
@@ -60,13 +56,34 @@ button {
     from { transform: translateY(100vh); opacity: 1; }
     to { transform: translateY(-10vh); opacity: 0; }
 }
+
+/* Egg */
+#egg {
+    font-size: 70px;
+    cursor: pointer;
+    margin: 20px;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+#egg:hover {
+    transform: scale(1.2);
+}
+
+/* Hidden message */
+.hidden {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+}
 </style>
 
 </head>
 
 <body>
 
-<!-- 🎵 Music -->
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
 </audio>
@@ -76,50 +93,55 @@ button {
 <h1>🌸 Happy Easter Sarah 🌸</h1>
 
 <button onclick="start()">💝 Start Experience</button>
-<button onclick="playVoice()">🎤 Play Voice</button>
+
+<div id="egg">🥚</div>
 
 <div class="letter">
 <p id="text" class="typing"></p>
+
+<div id="hiddenMsg" class="hidden">
+🌷 Surprise, my cupcake 🩷  
+You mean a lot to me, and I’m grateful for you.  
+Happy Easter again 💖
+</div>
+
 </div>
 
 </div>
 
 <script>
 
-/* MESSAGE */
-const message = `My cupcake 🩷,
+/* 💌 YOUR FULL MESSAGE (UNCHANGED) */
+const message = `🌸 Happy Easter 🌸 🥚
 
-You are strong, graceful, and deeply admired.
+Dear Sarah, my cupcake 🩷
 
-The way you care for Quinton and Wyatt shows your beautiful heart.
+Happy Easter. I just want to say how happy I am that I met you and how much I enjoy talking with you. Since we started talking, you’ve been such a kind, thoughtful, and amazing person, and I truly appreciate you more than words can express.
 
-You carry so much with love, and that is something truly special.
+You bring a really good energy into my life, and I look forward to every moment we share. You are such a strong woman — the way you handle situations, the way you care for your students, and the way you take care of the boys truly shows your heart and your strength.
 
-Since we started talking, you’ve brought warmth into my life.
+I admire the effort you put into everything you do. Since we started talking, I’ve seen how genuine, patient, and thoughtful you are, and it honestly means a lot to me.
 
-Happy Easter to you, Sarah 🩷  
-Happy Easter to Quinton and Wyatt 🐣  
+I don’t want this to just stay as talking and chatting… I’d really love for this to grow into something more meaningful with you.
 
-May God bless you with peace, joy, and happiness.
+I’m wishing the boys a Happy Easter as well. Happy Easter to Quinton and Wyatt 🩷 🥚  
+I hope they have a beautiful Easter and that you all are blessed by the Lord with happiness, peace, and joy.
 
 From me,  
-TotoKun 💙`;
+Totokun 💙`;
 
-/* START EVERYTHING */
+/* START EXPERIENCE */
 function start() {
-    startMusicWithFade();
+    playMusic();
     typeText();
     effects();
 }
 
-/* 🎵 MUSIC WITH FADE-IN */
-function startMusicWithFade() {
+/* 🎵 MUSIC */
+function playMusic() {
     let music = document.getElementById("music");
     music.volume = 0;
-
-    music.play().catch(() => {
-        console.log("User interaction required for audio");
-    });
+    music.play().catch(()=>{});
 
     let fade = setInterval(() => {
         if (music.volume < 0.4) {
@@ -130,7 +152,7 @@ function startMusicWithFade() {
     }, 200);
 }
 
-/* ⌨️ TYPING */
+/* ⌨️ TYPING EFFECT */
 function typeText() {
     let i = 0;
     function typing() {
@@ -143,25 +165,15 @@ function typeText() {
     typing();
 }
 
-/* 🎤 VOICE (works when button is pressed) */
-function playVoice() {
-    let speech = new SpeechSynthesisUtterance(message);
-    speech.rate = 1;
-    speech.pitch = 1;
-    speech.volume = 1;
-
-    speechSynthesis.speak(speech);
-}
-
-/* 🌸 EFFECTS */
+/* 🌸 FLOATING EFFECTS */
 function effects() {
     const emojis = ["🌸","💖","💋","🥚","💕","🌼"];
 
     setInterval(() => {
         let item = document.createElement("div");
         item.className = "item";
-        item.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-        item.style.left = Math.random() * 100 + "%";
+        item.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+        item.style.left = Math.random()*100 + "%";
         item.style.fontSize = (16 + Math.random()*20) + "px";
         item.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(item);
@@ -169,6 +181,25 @@ function effects() {
         setTimeout(() => item.remove(), 10000);
     }, 200);
 }
+
+/* 🥚 CRACKING EGG */
+let cracked = false;
+
+document.getElementById("egg").onclick = function() {
+    if (cracked) return;
+
+    this.innerHTML = "🥚💥";
+
+    setTimeout(() => {
+        this.innerHTML = "🐣✨";
+    }, 700);
+
+    setTimeout(() => {
+        document.getElementById("hiddenMsg").style.display = "block";
+    }, 1200);
+
+    cracked = true;
+};
 
 </script>
 
