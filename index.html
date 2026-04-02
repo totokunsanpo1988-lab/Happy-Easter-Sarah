@@ -14,7 +14,13 @@ body {
     overflow: hidden;
 }
 
-/* Hidden content */
+/* Title */
+h1 {
+    font-size: 40px;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ffb6c1;
+}
+
+/* Hidden */
 .hidden {
     display: none;
 }
@@ -26,13 +32,16 @@ body {
     padding: 30px;
 }
 
-/* Title glow */
-h1 {
-    font-size: 40px;
-    text-shadow: 0 0 10px #fff, 0 0 20px #ffb6c1;
+/* Letter box */
+.letter {
+    background: rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: auto;
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart {
     position: absolute;
     font-size: 20px;
@@ -42,18 +51,6 @@ h1 {
 @keyframes floatUp {
     0% { transform: translateY(100vh); opacity: 1; }
     100% { transform: translateY(-10vh); opacity: 0; }
-}
-
-/* Flowers */
-.flower {
-    position: absolute;
-    font-size: 26px;
-    animation: float 15s linear infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(0deg); }
-    100% { transform: translateY(-10vh) rotate(360deg); }
 }
 
 /* Sparkles */
@@ -74,7 +71,7 @@ h1 {
 
 /* Button */
 button {
-    padding: 12px 25px;
+    padding: 12px 20px;
     border: none;
     border-radius: 20px;
     background: white;
@@ -84,34 +81,34 @@ button {
     margin: 10px;
 }
 
-button:hover {
-    background: #ffe6ea;
-}
-
-/* Love letter box */
-.letter {
-    background: rgba(255,255,255,0.15);
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 700px;
-    margin: auto;
+/* Typing text */
+.typing {
+    white-space: pre-wrap;
+    font-size: 18px;
+    line-height: 1.8;
 }
 </style>
+
 </head>
 
 <body>
 
 <!-- 🎵 Music -->
 <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2d2b8c5b5c.mp3?filename=romantic-piano-ambient-110397.mp3">
 </audio>
 
-<!-- 🌸 Background elements -->
-<div class="flower" style="left:10%;">🌸</div>
-<div class="flower" style="left:30%;">🌼</div>
-<div class="flower" style="left:50%;">🌺</div>
-<div class="flower" style="left:70%;">🌷</div>
+<!-- 🔐 Unlock Screen -->
+<div id="unlockScreen">
+    <h2>🔐 Easter Surprise</h2>
+    <p>Tap to unlock your message</p>
+    <button onclick="unlock()">💝 Unlock</button>
+</div>
 
+<!-- 🎆 Canvas for confetti -->
+<canvas id="confetti"></canvas>
+
+<!-- 🌸 Content -->
 <div id="content" class="hidden">
 
 <div class="container">
@@ -119,19 +116,26 @@ button:hover {
 <h1>🌸 Happy Easter Sarah 🌸</h1>
 
 <div class="letter">
+<p id="text" class="typing"></p>
+</div>
 
-<p>
-My cupcake 🩷,<br><br>
+</div>
+</div>
 
-You are one of the strongest women I know. The way you handle everything in your life with patience, grace, and strength is something I truly admire. You carry so much, yet you still show kindness and care in everything you do.
+<script>
 
-The way you take care of Quinton and Wyatt, guiding them and loving them the way you do, shows the beautiful heart you have as a mother. They are truly blessed to have you.
+/* Typing text */
+const message = `My cupcake 🩷,
 
-I also admire how you teach your students. You’re shaping lives, giving them guidance and knowledge with care—that takes a special kind of person, and that’s who you are.
+You are incredibly strong, and I deeply admire the way you handle life with grace and patience. Even when things are difficult, you still show strength, kindness, and calmness.
 
-Since we started talking, you’ve brought something meaningful into my life. I enjoy every moment, every conversation, and I truly appreciate the connection we’re building.
+The way you care for Quinton and Wyatt shows how amazing of a mother you are. They are truly blessed to have you.
 
-I don’t want this to just stay as talking… I’d love for this to grow into something deeper and more meaningful.
+I also admire how you teach your students. You’re shaping lives, and that takes a heart like yours.
+
+Since we started talking, you’ve brought something meaningful into my life. I truly enjoy every moment with you.
+
+I don’t want this to just stay as talking… I’d love for it to grow into something more meaningful.
 
 Happy Easter to you, my cupcake 🩷  
 Happy Easter to Quinton and Wyatt 🐣  
@@ -139,31 +143,38 @@ Happy Easter to Quinton and Wyatt 🐣
 May God bless you all with peace, joy, and happiness.
 
 From me,  
-TotoKun 💙
-</p>
+TotoKun 💙`;
 
-</div>
-
-</div>
-
-</div>
-
-<!-- 🔐 Unlock screen -->
-<div id="unlockScreen">
-    <h2>🔐 Easter Surprise</h2>
-    <p>Click below to unlock your special message</p>
-    <button onclick="unlock()">💝 Unlock</button>
-</div>
-
-<!-- 🎵 Play music button -->
-<button onclick="document.getElementById('music').play()">▶ Play Music</button>
-
-<script>
+/* Typing effect */
+function typeText() {
+    let i = 0;
+    let speed = 25;
+    function typing() {
+        if (i < message.length) {
+            document.getElementById("text").innerHTML += message.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
 
 /* Unlock function */
 function unlock() {
     document.getElementById("unlockScreen").style.display = "none";
     document.getElementById("content").classList.remove("hidden");
+
+    // Start music
+    document.getElementById("music").play();
+
+    // Start typing
+    typeText();
+
+    // Confetti
+    startConfetti();
+
+    // Heart burst
+    heartBurst();
 }
 
 /* Floating hearts */
@@ -186,6 +197,78 @@ setInterval(() => {
     document.body.appendChild(sparkle);
     setTimeout(() => sparkle.remove(), 5000);
 }, 200);
+
+/* Heart burst */
+function heartBurst() {
+    for (let i = 0; i < 30; i++) {
+        let heart = document.createElement("div");
+        heart.innerHTML = "💖";
+        heart.style.position = "absolute";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = "20px";
+        heart.style.transform = "translate(-50%, -50%)";
+        document.body.appendChild(heart);
+
+        let angle = Math.random() * 2 * Math.PI;
+        let distance = Math.random() * 200;
+
+        heart.animate([
+            { transform: "translate(-50%, -50%)" },
+            { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)` }
+        ], {
+            duration: 2000,
+            easing: "ease-out"
+        });
+
+        setTimeout(() => heart.remove(), 2000);
+    }
+}
+
+/* Simple confetti */
+function startConfetti() {
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+
+    for (let i = 0; i < 100; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 6 + 2,
+            d: Math.random() * 100
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+
+        pieces.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        update();
+    }
+
+    function update() {
+        pieces.forEach(p => {
+            p.y += 2;
+            if (p.y > canvas.height) {
+                p.y = 0;
+                p.x = Math.random() * canvas.width;
+            }
+        });
+    }
+
+    setInterval(draw, 30);
+}
 
 </script>
 
