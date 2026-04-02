@@ -14,27 +14,33 @@ body {
     text-align: center;
 }
 
+/* Container */
 .container {
     position: relative;
     z-index: 2;
     padding: 25px;
 }
 
+/* Message box (FIXED for readability) */
 .letter {
     max-width: 800px;
     margin: auto;
-    padding: 20px;
-    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.6); /* DARK for contrast */
     border-radius: 20px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 }
 
+/* Text styling (FIXED) */
 .typing {
     white-space: pre-wrap;
     font-size: 18px;
     line-height: 1.7;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0,0,0,0.9);
 }
 
+/* Buttons */
 button {
     padding: 12px 20px;
     border: none;
@@ -44,17 +50,6 @@ button {
     font-weight: bold;
     cursor: pointer;
     margin: 10px;
-}
-
-/* Floating emojis */
-.item {
-    position: absolute;
-    animation: floatUp linear forwards;
-}
-
-@keyframes floatUp {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
 }
 
 /* Egg */
@@ -75,8 +70,19 @@ button {
     display: none;
     margin-top: 20px;
     padding: 15px;
-    background: rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.2);
     border-radius: 15px;
+}
+
+/* Floating items */
+.item {
+    position: absolute;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
 
@@ -84,6 +90,7 @@ button {
 
 <body>
 
+<!-- 🎵 Music -->
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
 </audio>
@@ -111,7 +118,7 @@ Happy Easter again 💖
 
 <script>
 
-/* 💌 YOUR FULL MESSAGE (UNCHANGED) */
+/* 💌 FULL MESSAGE (UNCHANGED) */
 const message = `🌸 Happy Easter 🌸 🥚
 
 Dear Sarah, my cupcake 🩷
@@ -130,17 +137,18 @@ I hope they have a beautiful Easter and that you all are blessed by the Lord wit
 From me,  
 Totokun 💙`;
 
-/* START EXPERIENCE */
+/* 🚀 START */
 function start() {
     playMusic();
     typeText();
     effects();
 }
 
-/* 🎵 MUSIC */
+/* 🎵 MUSIC WITH FADE */
 function playMusic() {
     let music = document.getElementById("music");
     music.volume = 0;
+
     music.play().catch(()=>{});
 
     let fade = setInterval(() => {
@@ -182,7 +190,7 @@ function effects() {
     }, 200);
 }
 
-/* 🥚 CRACKING EGG */
+/* 🥚 CRACK EGG */
 let cracked = false;
 
 document.getElementById("egg").onclick = function() {
