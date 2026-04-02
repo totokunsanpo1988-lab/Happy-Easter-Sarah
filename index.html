@@ -8,7 +8,7 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f9; /* calm soft background */
+    background: #f4f6f9;
     text-align: center;
     color: #222;
 }
@@ -81,7 +81,6 @@ button {
 
 <body>
 
-<!-- 🎵 Music -->
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b8c0f6b2b.mp3?filename=soft-piano-112199.mp3">
 </audio>
@@ -125,31 +124,33 @@ I’m wishing the boys a Happy Easter as well. Happy Easter to Quinton and Wyatt
 I hope they have a beautiful Easter and that you all are blessed by the Lord with happiness, peace, and joy.
 
 From me,  
-Totokun 💙`;
+Totokun 🩷`;
 
+let cracked = false;
+
+/* 🚀 START */
 function start() {
     playMusic();
     typeText();
     effects();
 }
 
-/* 🎵 Music */
+/* 🎵 MUSIC (simple & stable) */
 function playMusic() {
     let music = document.getElementById("music");
-    music.volume = 0;
 
-    music.play().catch(()=>{});
+    let playPromise = music.play();
 
-    let fade = setInterval(() => {
-        if (music.volume < 0.5) {
-            music.volume += 0.02;
-        } else {
-            clearInterval(fade);
-        }
-    }, 150);
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            console.log("Tap required to play music");
+        });
+    }
+
+    music.volume = 0.5;
 }
 
-/* ⌨️ Typing */
+/* ⌨️ TYPING EFFECT */
 function typeText() {
     let i = 0;
     let text = document.getElementById("text");
@@ -164,7 +165,7 @@ function typeText() {
     typing();
 }
 
-/* 🌸 Floating */
+/* 🌸 FLOATING EFFECTS */
 function effects() {
     const emojis = ["🌸","💖","💋","🥚","💕","🌼","✨"];
 
@@ -182,14 +183,13 @@ function effects() {
     }, 300);
 }
 
-/* 🥚 Egg reveal */
-let cracked = false;
-
+/* 🥚 EGG */
 document.getElementById("egg").onclick = function() {
     if (cracked) return;
 
     this.innerHTML = "🐣✨";
     document.getElementById("hiddenMsg").style.display = "block";
+
     cracked = true;
 };
 
