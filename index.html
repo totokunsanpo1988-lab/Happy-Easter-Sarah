@@ -2,272 +2,209 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Easter</title>
+<title>For Sarah 💖</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-    color: white;
-    text-align: center;
     overflow: hidden;
+    color: white;
+    background: black;
 }
 
-/* Title */
-h1 {
-    font-size: 40px;
-    text-shadow: 0 0 10px #fff, 0 0 20px #ffb6c1;
+/* BACKGROUND VIDEO */
+#bgVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.4;
+    object-fit: cover;
+    z-index: 0;
 }
 
-/* Hidden */
-.hidden {
-    display: none;
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    z-index: 1;
 }
 
-/* Container */
+/* CONTENT */
 .container {
     position: relative;
     z-index: 2;
-    padding: 30px;
+    text-align: center;
+    padding: 40px;
 }
 
-/* Letter box */
+/* LETTER */
 .letter {
-    background: rgba(255,255,255,0.15);
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 700px;
+    max-width: 800px;
     margin: auto;
+    padding: 25px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
 }
 
-/* Hearts */
+/* TEXT */
+.typing {
+    white-space: pre-wrap;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* BUTTON */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff69b4;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* HEARTS */
 .heart {
     position: absolute;
-    font-size: 20px;
-    animation: floatUp 10s linear infinite;
+    font-size: 18px;
+    animation: floatUp linear forwards;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(100vh); opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* Sparkles */
+/* SPARKLES */
 .sparkle {
     position: absolute;
     width: 4px;
     height: 4px;
     background: white;
     border-radius: 50%;
-    animation: sparkle 5s linear infinite;
+    animation: sparkle 2s infinite;
 }
 
 @keyframes sparkle {
-    0% { opacity: 0; transform: scale(0); }
-    50% { opacity: 1; transform: scale(1.5); }
-    100% { opacity: 0; transform: scale(0); }
+    0%,100% {opacity:0}
+    50% {opacity:1}
 }
 
-/* Button */
-button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 20px;
-    background: white;
-    color: #ee9ca7;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 10px;
-}
-
-/* Typing text */
-.typing {
-    white-space: pre-wrap;
-    font-size: 18px;
-    line-height: 1.8;
+/* SCROLL REVEAL */
+.hidden {
+    display: none;
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- 🎵 Music -->
+<!-- 🎬 BACKGROUND VIDEO (you can replace this link anytime) -->
+<video autoplay muted loop id="bgVideo">
+<source src="https://cdn.coverr.co/videos/coverr-sunset-over-the-ocean-6312/1080p.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- 🎵 MUSIC -->
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2d2b8c5b5c.mp3?filename=romantic-piano-ambient-110397.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
 </audio>
-
-<!-- 🔐 Unlock Screen -->
-<div id="unlockScreen">
-    <h2>🔐 Easter Surprise</h2>
-    <p>Tap to unlock your message</p>
-    <button onclick="unlock()">💝 Unlock</button>
-</div>
-
-<!-- 🎆 Canvas for confetti -->
-<canvas id="confetti"></canvas>
-
-<!-- 🌸 Content -->
-<div id="content" class="hidden">
 
 <div class="container">
 
-<h1>🌸 Happy Easter Sarah 🌸</h1>
+<h1>🌸 For Sarah 🌸</h1>
 
-<div class="letter">
+<button onclick="start()">💝 Begin</button>
+
+<div class="letter hidden" id="letter">
 <p id="text" class="typing"></p>
 </div>
 
 </div>
-</div>
 
 <script>
 
-/* Typing text */
+/* MESSAGE */
 const message = `My cupcake 🩷,
 
-You are incredibly strong, and I deeply admire the way you handle life with grace and patience. Even when things are difficult, you still show strength, kindness, and calmness.
+You are truly remarkable.
 
-The way you care for Quinton and Wyatt shows how amazing of a mother you are. They are truly blessed to have you.
+The strength you carry, the patience you show, and the way you handle life with grace is something I deeply admire.
 
-I also admire how you teach your students. You’re shaping lives, and that takes a heart like yours.
+The way you love and care for Quinton and Wyatt shows your heart in the most beautiful way. You are not just guiding them—you are shaping their future with love and wisdom.
 
-Since we started talking, you’ve brought something meaningful into my life. I truly enjoy every moment with you.
+Your work as a teacher is inspiring. You don’t just teach—you impact lives, and that is something powerful and rare.
 
-I don’t want this to just stay as talking… I’d love for it to grow into something more meaningful.
+Since we started talking, you’ve brought something special into my life. Something calm, warm, and meaningful.
 
-Happy Easter to you, my cupcake 🩷  
+I truly value you.
+
+I don’t want this to remain just conversations… I want this to grow into something real, something strong, something lasting.
+
+Happy Easter to you, Sarah 🩷  
 Happy Easter to Quinton and Wyatt 🐣  
 
-May God bless you all with peace, joy, and happiness.
+May God bless you with peace, joy, and everything your heart desires.
 
 From me,  
 TotoKun 💙`;
 
-/* Typing effect */
+/* START EXPERIENCE */
+function start() {
+    document.getElementById("letter").classList.remove("hidden");
+    playMusic();
+    typeText();
+    effects();
+}
+
+/* MUSIC */
+function playMusic() {
+    let music = document.getElementById("music");
+    music.volume = 0.4;
+    music.play().catch(() => {});
+}
+
+/* TYPING */
 function typeText() {
     let i = 0;
-    let speed = 25;
     function typing() {
         if (i < message.length) {
             document.getElementById("text").innerHTML += message.charAt(i);
             i++;
-            setTimeout(typing, speed);
+            setTimeout(typing, 20);
         }
     }
     typing();
 }
 
-/* Unlock function */
-function unlock() {
-    document.getElementById("unlockScreen").style.display = "none";
-    document.getElementById("content").classList.remove("hidden");
-
-    // Start music
-    document.getElementById("music").play();
-
-    // Start typing
-    typeText();
-
-    // Confetti
-    startConfetti();
-
-    // Heart burst
-    heartBurst();
-}
-
-/* Floating hearts */
-setInterval(() => {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "%";
-    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 10000);
-}, 400);
-
-/* Sparkles */
-setInterval(() => {
-    let sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.style.left = Math.random() * 100 + "%";
-    sparkle.style.top = Math.random() * 100 + "%";
-    document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 5000);
-}, 200);
-
-/* Heart burst */
-function heartBurst() {
-    for (let i = 0; i < 30; i++) {
+/* EFFECTS */
+function effects() {
+    setInterval(() => {
         let heart = document.createElement("div");
+        heart.className = "heart";
         heart.innerHTML = "💖";
-        heart.style.position = "absolute";
-        heart.style.left = "50%";
-        heart.style.top = "50%";
-        heart.style.fontSize = "20px";
-        heart.style.transform = "translate(-50%, -50%)";
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 10000);
+    }, 250);
 
-        let angle = Math.random() * 2 * Math.PI;
-        let distance = Math.random() * 200;
-
-        heart.animate([
-            { transform: "translate(-50%, -50%)" },
-            { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)` }
-        ], {
-            duration: 2000,
-            easing: "ease-out"
-        });
-
-        setTimeout(() => heart.remove(), 2000);
-    }
-}
-
-/* Simple confetti */
-function startConfetti() {
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let pieces = [];
-
-    for (let i = 0; i < 100; i++) {
-        pieces.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 6 + 2,
-            d: Math.random() * 100
-        });
-    }
-
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
-
-        pieces.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fill();
-        });
-
-        update();
-    }
-
-    function update() {
-        pieces.forEach(p => {
-            p.y += 2;
-            if (p.y > canvas.height) {
-                p.y = 0;
-                p.x = Math.random() * canvas.width;
-            }
-        });
-    }
-
-    setInterval(draw, 30);
+    setInterval(() => {
+        let s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.left = Math.random()*100 + "%";
+        s.style.top = Math.random()*100 + "%";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 2000);
+    }, 100);
 }
 
 </script>
