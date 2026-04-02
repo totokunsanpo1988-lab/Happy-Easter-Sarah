@@ -8,61 +8,51 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-    color: white;
+    background: #f4f6f9; /* calm soft background */
     text-align: center;
+    color: #222;
 }
 
 /* Container */
 .container {
-    position: relative;
-    z-index: 2;
-    padding: 25px;
+    padding: 30px;
 }
 
-/* Message box (FIXED for readability) */
+/* Message box */
 .letter {
     max-width: 800px;
     margin: auto;
-    padding: 25px;
-    background: rgba(0, 0, 0, 0.6); /* DARK for contrast */
-    border-radius: 20px;
-    backdrop-filter: blur(8px);
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* Text styling (FIXED) */
+/* Text */
 .typing {
     white-space: pre-wrap;
-    font-size: 18px;
-    line-height: 1.7;
-    color: #ffffff;
-    text-shadow: 0 0 6px rgba(0,0,0,0.9);
+    font-size: 20px;
+    line-height: 1.8;
+    color: #222;
 }
 
-/* Buttons */
+/* Button */
 button {
-    padding: 12px 20px;
+    padding: 12px 22px;
     border: none;
     border-radius: 25px;
-    background: white;
-    color: #ff69b4;
+    background: #ff6fae;
+    color: white;
     font-weight: bold;
     cursor: pointer;
-    margin: 10px;
+    margin: 15px;
 }
 
 /* Egg */
 #egg {
-    font-size: 70px;
+    font-size: 60px;
     cursor: pointer;
     margin: 20px;
-    display: inline-block;
-    transition: transform 0.3s;
-}
-
-#egg:hover {
-    transform: scale(1.2);
 }
 
 /* Hidden message */
@@ -70,14 +60,15 @@ button {
     display: none;
     margin-top: 20px;
     padding: 15px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 15px;
+    background: #ffe6f0;
+    border-radius: 10px;
 }
 
-/* Floating items */
+/* Floating emojis */
 .item {
-    position: absolute;
+    position: fixed;
     animation: floatUp linear forwards;
+    pointer-events: none;
 }
 
 @keyframes floatUp {
@@ -92,14 +83,14 @@ button {
 
 <!-- 🎵 Music -->
 <audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b8c0f6b2b.mp3?filename=soft-piano-112199.mp3">
 </audio>
 
 <div class="container">
 
 <h1>🌸 Happy Easter Sarah 🌸</h1>
 
-<button onclick="start()">💝 Start Experience</button>
+<button onclick="start()">💝 Start</button>
 
 <div id="egg">🥚</div>
 
@@ -107,9 +98,9 @@ button {
 <p id="text" class="typing"></p>
 
 <div id="hiddenMsg" class="hidden">
-🌷 Surprise, my cupcake 🩷  
-You mean a lot to me, and I’m grateful for you.  
-Happy Easter again 💖
+🌷 Surprise my cupcake 🩷  
+Happy Easter again 💖  
+You’re truly special ✨
 </div>
 
 </div>
@@ -118,7 +109,6 @@ Happy Easter again 💖
 
 <script>
 
-/* 💌 FULL MESSAGE (UNCHANGED) */
 const message = `🌸 Happy Easter 🌸 🥚
 
 Dear Sarah, my cupcake 🩷
@@ -131,20 +121,19 @@ I admire the effort you put into everything you do. Since we started talking, I�
 
 I don’t want this to just stay as talking and chatting… I’d really love for this to grow into something more meaningful with you.
 
-I’m wishing the boys a Happy Easter as well. Happy Easter to Quinton and Wyatt 🩷 🥚  
+I’m wishing the boys a Happy Easter as well. Happy Easter to Quinton and Wyatt 🩷 🐣  
 I hope they have a beautiful Easter and that you all are blessed by the Lord with happiness, peace, and joy.
 
 From me,  
 Totokun 💙`;
 
-/* 🚀 START */
 function start() {
     playMusic();
     typeText();
     effects();
 }
 
-/* 🎵 MUSIC WITH FADE */
+/* 🎵 Music */
 function playMusic() {
     let music = document.getElementById("music");
     music.volume = 0;
@@ -152,60 +141,55 @@ function playMusic() {
     music.play().catch(()=>{});
 
     let fade = setInterval(() => {
-        if (music.volume < 0.4) {
+        if (music.volume < 0.5) {
             music.volume += 0.02;
         } else {
             clearInterval(fade);
         }
-    }, 200);
+    }, 150);
 }
 
-/* ⌨️ TYPING EFFECT */
+/* ⌨️ Typing */
 function typeText() {
     let i = 0;
+    let text = document.getElementById("text");
+
     function typing() {
         if (i < message.length) {
-            document.getElementById("text").innerHTML += message.charAt(i);
+            text.innerHTML += message.charAt(i);
             i++;
-            setTimeout(typing, 20);
+            setTimeout(typing, 15);
         }
     }
     typing();
 }
 
-/* 🌸 FLOATING EFFECTS */
+/* 🌸 Floating */
 function effects() {
-    const emojis = ["🌸","💖","💋","🥚","💕","🌼"];
+    const emojis = ["🌸","💖","💋","🥚","💕","🌼","✨"];
 
     setInterval(() => {
         let item = document.createElement("div");
         item.className = "item";
         item.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
         item.style.left = Math.random()*100 + "%";
-        item.style.fontSize = (16 + Math.random()*20) + "px";
+        item.style.fontSize = (18 + Math.random()*20) + "px";
         item.style.animationDuration = (5 + Math.random()*5) + "s";
+
         document.body.appendChild(item);
 
         setTimeout(() => item.remove(), 10000);
-    }, 200);
+    }, 300);
 }
 
-/* 🥚 CRACK EGG */
+/* 🥚 Egg reveal */
 let cracked = false;
 
 document.getElementById("egg").onclick = function() {
     if (cracked) return;
 
-    this.innerHTML = "🥚💥";
-
-    setTimeout(() => {
-        this.innerHTML = "🐣✨";
-    }, 700);
-
-    setTimeout(() => {
-        document.getElementById("hiddenMsg").style.display = "block";
-    }, 1200);
-
+    this.innerHTML = "🐣✨";
+    document.getElementById("hiddenMsg").style.display = "block";
     cracked = true;
 };
 
