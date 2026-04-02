@@ -1,87 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Happy Easter</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Arial", sans-serif;
-      text-align: center;
-      color: white;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<title>Happy Easter</title>
 
-    .container {
-      padding: 50px;
-      position: relative;
-      z-index: 2;
-    }
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
 
-    h1 {
-      font-size: 45px;
-      margin-bottom: 20px;
-    }
+/* Hidden content */
+.hidden {
+    display: none;
+}
 
-    p {
-      font-size: 18px;
-      max-width: 650px;
-      margin: 12px auto;
-      line-height: 1.6;
-    }
+/* Container */
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+}
 
-    .heart {
-      position: absolute;
-      font-size: 20px;
-      animation: float 8s linear infinite;
-    }
+/* Title glow */
+h1 {
+    font-size: 40px;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ffb6c1;
+}
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(1); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-    }
-  </style>
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 10s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Flowers */
+.flower {
+    position: absolute;
+    font-size: 26px;
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-10vh) rotate(360deg); }
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkle 5s linear infinite;
+}
+
+@keyframes sparkle {
+    0% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1.5); }
+    100% { opacity: 0; transform: scale(0); }
+}
+
+/* Button */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    color: #ee9ca7;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background: #ffe6ea;
+}
+
+/* Love letter box */
+.letter {
+    background: rgba(255,255,255,0.15);
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 700px;
+    margin: auto;
+}
+</style>
 </head>
 
 <body>
 
+<!-- 🎵 Music -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<!-- 🌸 Background elements -->
+<div class="flower" style="left:10%;">🌸</div>
+<div class="flower" style="left:30%;">🌼</div>
+<div class="flower" style="left:50%;">🌺</div>
+<div class="flower" style="left:70%;">🌷</div>
+
+<div id="content" class="hidden">
+
 <div class="container">
-  <h1>🌸 Happy Easter 🌸</h1>
 
-  <p>Dear Sarah, my cupcake 🩷</p>
+<h1>🌸 Happy Easter Sarah 🌸</h1>
 
-  <p>
-    Happy Easter. I’m really grateful I met you, and I truly enjoy every moment talking with you. 
-    Since we started, you’ve been such a kind, thoughtful, and amazing person, and I appreciate you more than words can express.
-  </p>
+<div class="letter">
 
-  <p>
-    You bring something really special into my life, and I honestly look forward to every time we talk.
-    I’d really love for this to grow into something more meaningful with you.
-  </p>
+<p>
+My cupcake 🩷,<br><br>
 
-  <p>
-    Happy Easter to Quinton and Wyatt 🩷  
-    I hope they have a beautiful Easter filled with joy, and that you all are blessed by the Lord with happiness, peace, and love.
-  </p>
+You are one of the strongest women I know. The way you handle everything in your life with patience, grace, and strength is something I truly admire. You carry so much, yet you still show kindness and care in everything you do.
 
-  <p>From me, TotoKun</p>
+The way you take care of Quinton and Wyatt, guiding them and loving them the way you do, shows the beautiful heart you have as a mother. They are truly blessed to have you.
+
+I also admire how you teach your students. You’re shaping lives, giving them guidance and knowledge with care—that takes a special kind of person, and that’s who you are.
+
+Since we started talking, you’ve brought something meaningful into my life. I enjoy every moment, every conversation, and I truly appreciate the connection we’re building.
+
+I don’t want this to just stay as talking… I’d love for this to grow into something deeper and more meaningful.
+
+Happy Easter to you, my cupcake 🩷  
+Happy Easter to Quinton and Wyatt 🐣  
+
+May God bless you all with peace, joy, and happiness.
+
+From me,  
+TotoKun 💙
+</p>
+
 </div>
 
+</div>
+
+</div>
+
+<!-- 🔐 Unlock screen -->
+<div id="unlockScreen">
+    <h2>🔐 Easter Surprise</h2>
+    <p>Click below to unlock your special message</p>
+    <button onclick="unlock()">💝 Unlock</button>
+</div>
+
+<!-- 🎵 Play music button -->
+<button onclick="document.getElementById('music').play()">▶ Play Music</button>
+
 <script>
-  const emojis = ["💖","🌸","💗","✨","💐","🌷"];
-  for (let i = 0; i < 30; i++) {
-    let span = document.createElement("span");
-    span.className = "heart";
-    span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-    span.style.left = Math.random() * 100 + "vw";
-    span.style.animationDuration = (4 + Math.random() * 6) + "s";
-    span.style.top = Math.random() * 100 + "vh";
-    span.style.fontSize = (16 + Math.random() * 20) + "px";
-    document.body.appendChild(span);
-  }
+
+/* Unlock function */
+function unlock() {
+    document.getElementById("unlockScreen").style.display = "none";
+    document.getElementById("content").classList.remove("hidden");
+}
+
+/* Floating hearts */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+}, 400);
+
+/* Sparkles */
+setInterval(() => {
+    let sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = Math.random() * 100 + "%";
+    sparkle.style.top = Math.random() * 100 + "%";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 5000);
+}, 200);
+
 </script>
 
 </body>
