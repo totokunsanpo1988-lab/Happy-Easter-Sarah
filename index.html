@@ -8,24 +8,22 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    color: white;
     background: black;
+    color: white;
+    overflow: hidden;
 }
 
-/* BACKGROUND VIDEO */
+/* Background video */
 #bgVideo {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    opacity: 0.4;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    opacity: 0.35;
     z-index: 0;
 }
 
-/* OVERLAY */
+/* Overlay */
 .overlay {
     position: fixed;
     width: 100%;
@@ -34,7 +32,7 @@ body {
     z-index: 1;
 }
 
-/* CONTENT */
+/* Content */
 .container {
     position: relative;
     z-index: 2;
@@ -42,7 +40,7 @@ body {
     padding: 40px;
 }
 
-/* LETTER */
+/* Letter */
 .letter {
     max-width: 800px;
     margin: auto;
@@ -52,14 +50,14 @@ body {
     backdrop-filter: blur(12px);
 }
 
-/* TEXT */
+/* Typing */
 .typing {
     white-space: pre-wrap;
     font-size: 18px;
     line-height: 1.7;
 }
 
-/* BUTTON */
+/* Button */
 button {
     padding: 12px 25px;
     border: none;
@@ -70,10 +68,17 @@ button {
     cursor: pointer;
 }
 
-/* HEARTS */
+/* Music control */
+#musicBtn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+}
+
+/* Hearts */
 .heart {
     position: absolute;
-    font-size: 18px;
     animation: floatUp linear forwards;
 }
 
@@ -81,50 +86,36 @@ button {
     from { transform: translateY(100vh); opacity: 1; }
     to { transform: translateY(-10vh); opacity: 0; }
 }
-
-/* SPARKLES */
-.sparkle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    animation: sparkle 2s infinite;
-}
-
-@keyframes sparkle {
-    0%,100% {opacity:0}
-    50% {opacity:1}
-}
-
-/* SCROLL REVEAL */
-.hidden {
-    display: none;
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🎬 BACKGROUND VIDEO (you can replace this link anytime) -->
+<!-- 🎬 Background -->
 <video autoplay muted loop id="bgVideo">
 <source src="https://cdn.coverr.co/videos/coverr-sunset-over-the-ocean-6312/1080p.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- 🎵 MUSIC -->
+<!-- 🎵 Music -->
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
 </audio>
 
+<!-- 🎧 Music button -->
+<div id="musicBtn">
+<button onclick="playMusic()">🎵 Play Music</button>
+</div>
+
+<!-- 💝 Content -->
 <div class="container">
 
 <h1>🌸 For Sarah 🌸</h1>
 
-<button onclick="start()">💝 Begin</button>
+<button onclick="start()">💝 Open Message</button>
 
-<div class="letter hidden" id="letter">
+<div class="letter">
 <p id="text" class="typing"></p>
 </div>
 
@@ -135,44 +126,37 @@ button {
 /* MESSAGE */
 const message = `My cupcake 🩷,
 
-You are truly remarkable.
+You are strong, graceful, and truly admirable.
 
-The strength you carry, the patience you show, and the way you handle life with grace is something I deeply admire.
+The way you care for Quinton and Wyatt shows your heart. The way you teach shows your purpose. You are making a difference every day.
 
-The way you love and care for Quinton and Wyatt shows your heart in the most beautiful way. You are not just guiding them—you are shaping their future with love and wisdom.
-
-Your work as a teacher is inspiring. You don’t just teach—you impact lives, and that is something powerful and rare.
-
-Since we started talking, you’ve brought something special into my life. Something calm, warm, and meaningful.
-
-I truly value you.
-
-I don’t want this to remain just conversations… I want this to grow into something real, something strong, something lasting.
+Since we started talking, you’ve brought warmth into my life. I value you deeply.
 
 Happy Easter to you, Sarah 🩷  
 Happy Easter to Quinton and Wyatt 🐣  
 
-May God bless you with peace, joy, and everything your heart desires.
+May God bless you with peace and happiness.
 
 From me,  
 TotoKun 💙`;
 
-/* START EXPERIENCE */
+/* START */
 function start() {
-    document.getElementById("letter").classList.remove("hidden");
-    playMusic();
+    playMusic(); // must be triggered by click
     typeText();
-    effects();
+    hearts();
 }
 
-/* MUSIC */
+/* MUSIC FIX */
 function playMusic() {
     let music = document.getElementById("music");
     music.volume = 0.4;
-    music.play().catch(() => {});
+    music.play().catch(() => {
+        alert("Tap the 'Play Music' button to hear the sound 🎵");
+    });
 }
 
-/* TYPING */
+/* TYPE */
 function typeText() {
     let i = 0;
     function typing() {
@@ -185,26 +169,16 @@ function typeText() {
     typing();
 }
 
-/* EFFECTS */
-function effects() {
+/* HEARTS */
+function hearts() {
     setInterval(() => {
         let heart = document.createElement("div");
-        heart.className = "heart";
         heart.innerHTML = "💖";
+        heart.className = "heart";
         heart.style.left = Math.random()*100 + "%";
-        heart.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 10000);
-    }, 250);
-
-    setInterval(() => {
-        let s = document.createElement("div");
-        s.className = "sparkle";
-        s.style.left = Math.random()*100 + "%";
-        s.style.top = Math.random()*100 + "%";
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 2000);
-    }, 100);
+        setTimeout(() => heart.remove(), 8000);
+    }, 300);
 }
 
 </script>
