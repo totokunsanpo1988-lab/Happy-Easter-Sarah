@@ -8,36 +8,17 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: black;
-    color: white;
     overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+    color: white;
+    text-align: center;
 }
 
-/* Background video */
-#bgVideo {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.35;
-    z-index: 0;
-}
-
-/* Overlay */
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
-    z-index: 1;
-}
-
-/* Content */
+/* Container */
 .container {
     position: relative;
     z-index: 2;
-    text-align: center;
-    padding: 40px;
+    padding: 30px;
 }
 
 /* Letter */
@@ -45,9 +26,9 @@ body {
     max-width: 800px;
     margin: auto;
     padding: 25px;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.15);
     border-radius: 20px;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
 }
 
 /* Typing */
@@ -57,27 +38,20 @@ body {
     line-height: 1.7;
 }
 
-/* Button */
+/* Buttons */
 button {
-    padding: 12px 25px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     background: white;
     color: #ff69b4;
     font-weight: bold;
     cursor: pointer;
+    margin: 10px;
 }
 
-/* Music control */
-#musicBtn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 5;
-}
-
-/* Hearts */
-.heart {
+/* Floating emojis */
+.item {
     position: absolute;
     animation: floatUp linear forwards;
 }
@@ -87,33 +61,22 @@ button {
     to { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
+
 </head>
 
 <body>
-
-<!-- 🎬 Background -->
-<video autoplay muted loop id="bgVideo">
-<source src="https://cdn.coverr.co/videos/coverr-sunset-over-the-ocean-6312/1080p.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
 
 <!-- 🎵 Music -->
 <audio id="music" loop>
 <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_2f5b6d8c60.mp3?filename=soft-piano-ambient-115199.mp3">
 </audio>
 
-<!-- 🎧 Music button -->
-<div id="musicBtn">
-<button onclick="playMusic()">🎵 Play Music</button>
-</div>
-
-<!-- 💝 Content -->
 <div class="container">
 
-<h1>🌸 For Sarah 🌸</h1>
+<h1>🌸 Happy Easter Sarah 🌸</h1>
 
-<button onclick="start()">💝 Open Message</button>
+<button onclick="start()">💝 Start Experience</button>
+<button onclick="playVoice()">🎤 Play Voice</button>
 
 <div class="letter">
 <p id="text" class="typing"></p>
@@ -126,37 +89,48 @@ button {
 /* MESSAGE */
 const message = `My cupcake 🩷,
 
-You are strong, graceful, and truly admirable.
+You are strong, graceful, and deeply admired.
 
-The way you care for Quinton and Wyatt shows your heart. The way you teach shows your purpose. You are making a difference every day.
+The way you care for Quinton and Wyatt shows your beautiful heart.
 
-Since we started talking, you’ve brought warmth into my life. I value you deeply.
+You carry so much with love, and that is something truly special.
+
+Since we started talking, you’ve brought warmth into my life.
 
 Happy Easter to you, Sarah 🩷  
 Happy Easter to Quinton and Wyatt 🐣  
 
-May God bless you with peace and happiness.
+May God bless you with peace, joy, and happiness.
 
 From me,  
 TotoKun 💙`;
 
-/* START */
+/* START EVERYTHING */
 function start() {
-    playMusic(); // must be triggered by click
+    startMusicWithFade();
     typeText();
-    hearts();
+    effects();
 }
 
-/* MUSIC FIX */
-function playMusic() {
+/* 🎵 MUSIC WITH FADE-IN */
+function startMusicWithFade() {
     let music = document.getElementById("music");
-    music.volume = 0.4;
+    music.volume = 0;
+
     music.play().catch(() => {
-        alert("Tap the 'Play Music' button to hear the sound 🎵");
+        console.log("User interaction required for audio");
     });
+
+    let fade = setInterval(() => {
+        if (music.volume < 0.4) {
+            music.volume += 0.02;
+        } else {
+            clearInterval(fade);
+        }
+    }, 200);
 }
 
-/* TYPE */
+/* ⌨️ TYPING */
 function typeText() {
     let i = 0;
     function typing() {
@@ -169,16 +143,31 @@ function typeText() {
     typing();
 }
 
-/* HEARTS */
-function hearts() {
+/* 🎤 VOICE (works when button is pressed) */
+function playVoice() {
+    let speech = new SpeechSynthesisUtterance(message);
+    speech.rate = 1;
+    speech.pitch = 1;
+    speech.volume = 1;
+
+    speechSynthesis.speak(speech);
+}
+
+/* 🌸 EFFECTS */
+function effects() {
+    const emojis = ["🌸","💖","💋","🥚","💕","🌼"];
+
     setInterval(() => {
-        let heart = document.createElement("div");
-        heart.innerHTML = "💖";
-        heart.className = "heart";
-        heart.style.left = Math.random()*100 + "%";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 8000);
-    }, 300);
+        let item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        item.style.left = Math.random() * 100 + "%";
+        item.style.fontSize = (16 + Math.random()*20) + "px";
+        item.style.animationDuration = (5 + Math.random()*5) + "s";
+        document.body.appendChild(item);
+
+        setTimeout(() => item.remove(), 10000);
+    }, 200);
 }
 
 </script>
